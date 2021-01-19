@@ -7,8 +7,13 @@
 - Intégrer Log
 
 2) Répartition des tâches :
-a) Commenter et documenter(.README) ce qui est déja fait
-b) Afficher les prochains passages à un arrêt donné
-c) Indiquer fichier CSV à partir de son chemin et le charger dans la BDD
-d) Téléharger CSV du site de la TAM en temps réel dans la BDD
-e) Faire un log
+a) Commenter et documenter(.README)
+b) Afficher les temps d'attente a un arrêt pour une ligne.
+c) Afficher les prochains passages à un arrêt donné
+d) Indiquer fichier CSV à partir de son chemin et le charger dans la BDD
+e) Téléharger CSV du site de la TAM en temps réel dans la BDD
+f) Faire un log
+
+
+Intaller "Pylint"
+
