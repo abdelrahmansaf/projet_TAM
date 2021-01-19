@@ -8,7 +8,7 @@
 
 2) Répartition des tâches :
 a) Commenter et documenter(.README)
-b) Afficher les temps d'attente a un arrêt pour une ligne.
+b) Afficher les temps d'attente à un arrêt pour une ligne.
 c) Afficher les prochains passages à un arrêt donné
 d) Indiquer fichier CSV à partir de son chemin et le charger dans la BDD (ok)
 e) Téléharger CSV du site de la TAM en temps réel dans la BDD
