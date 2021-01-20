@@ -59,11 +59,15 @@ def download_csv():
     urllib.request.urlretrieve(url,files_paths.csv_path)
     return files_paths
 
+def waiting_time(route_short_name,stop_name,trip_headsign,db_path,cursor):
+    cursor.execute(f"SELECT is_theorical FROM {db_path} WHERE route_short_name = '{route_short_name}' AND stop_name = '{stop_name}' AND trip_headsign = '{trip_headsign}' LIMIT 1")
+    return cursor.fetchone()
+    
 parser = argparse.ArgumentParser("Script to interact with data from the TAM API")
 parser.add_argument("-db_path", help="path to sqlite database")
 parser.add_argument("-csv_path", help="path to csv file to load into the db")
 parser.add_argument("-u", "--update", action="store_true", help="update realtime TAM database")
-parser.add_argument("-t", "--time", help="time for the waiting")
+parser.add_argument("-t", "--time", nargs="*", help="time for the waiting")
 parser.add_argument("-n", "--next", help="Next tramways")
 
 def main():
@@ -89,11 +93,14 @@ def main():
     c = conn.cursor()
 
     #cette fonction efface notre table
-    #remove_table(c)
+    
     create_schema(c)
     
     if args.update:
+        create_schema(c)
         load_csv(csv_path,c)
+        print(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))
+        remove_table(c)
     else:
         load_csv(args.csv_path, c)
 
