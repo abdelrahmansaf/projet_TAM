@@ -31,7 +31,7 @@ On importe
 - La fonction clear_rows(cursor) n'est pas utilisé pour le moment
 - Insert CSV row : créer la table
 - Load_csv : Ouvrir la db, la lire ligne par ligne
-- Remove table : si il y a une table, supprime la
+- Remove table : si nouvelle table, supprime l'ancienne
 - Create shéma : Créer la structure de la table (les colonnes, lignes..)
 - Class files(NamedTuple): On creer un objet qui contient deux variables de type str
 - csv_path correspond à chemin vers le ficher csv
@@ -52,22 +52,17 @@ On importe
 
 IV) Guide d'utilisation :
 
-Assurez vous d'avoir une connexion pour charger la bdd depuis le site de la TAM
-Dans votre terminal indiquez le chemin pour télécharger
-la base de donnée PS C:\Users\utilisateur\Downloads\projet_TAM-main> python .\transport.py 
+Assurez vous d'avoir une connexion pour charger la bdd depuis le site de la TAM Dans votre terminal 
+indiquez le chemin pour télécharger la base de donnée PS C:\Users\utilisateur\Downloads\projet_TAM-main> python .\transport.py
 
 Entrez les arguments :
 
-"-u" La fonction -u permet de télécharger la base de donnée en .csv directement via site de la tam, 
-et supprime la derniere base de donnée téléchargée.
-
+La fonction -u permet de télécharger la base de donnée en .csv directement via site de la tam 
 
 La fonction -t permet d’afficher le prochain tram dans votre terminal.  
-Entrez « -u -t » suivi du nom de votre arrêt et de sa direction, 
-exemple : -u -t 2 SABINES JACOU le terminal affiche (21:37)
-
+Entrez « -t » suivi du nom de votre arrêt et de sa direction
+exemple : -u -t 2 SABINES JACOU le Terminal affiche (21:37)
 
 La fonction -n affiche les 3 prochains tramways ou bus à un arret donné
 Entrez « -u, -t, -n » dans votre terminal 
-
-Pour toutes autres demandes RTFM.
+exemple : u -t -n JACOU
