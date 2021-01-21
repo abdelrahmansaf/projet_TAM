@@ -112,22 +112,22 @@ def main():
     create_schema(c) 
     
     if not args.file:
-        if args.update and args.next:
+        if args.next and (args.update or (args.db_path and args.csv_path)):
             load_csv(csv_path,c)
             for trip in nextTram(args.next, "infoarret",c):
                 print(trip)
-        elif args.update and args.time:
+        elif args.time and (args.update or (args.db_path and args.csv_path)):
             load_csv(csv_path,c)
             print("Le prochain tram arrive à :","".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))))     
         else:
             load_csv(args.csv_path, c)
     else:
         info_tam = open("info_tam.txt", "a",encoding='utf-8')
-        if args.update and args.next:
+        if args.next and (args.update or (args.db_path and args.csv_path)):
             load_csv(csv_path,c)
             for trip in nextTram(args.next, "infoarret",c):
                 info_tam.write(f"{trip}\n")
-        elif args.update and args.time:
+        elif args.time and (args.update or (args.db_path and args.csv_path)):
             load_csv(csv_path,c)
             info_tam.write("Le prochain tram arrive à :" + "".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c)))+"\n") 
         else:
