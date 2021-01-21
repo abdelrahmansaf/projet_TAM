@@ -7,12 +7,12 @@ I) Définir les différentes tâches :
 - Intégrer une Log
 
 II) Répartition des tâches :
-d) Indiquer fichier CSV à partir de son chemin et le charger dans la BDD 
-e) Téléharger CSV du site de la TAM en temps réel dans la BDD (fonction mettre à jour la base de donnée)
-b) Afficher les temps d'attente à un arrêt pour une ligne.
-c) Afficher les prochains passages à un arrêt donné
-f) Faire une log 
-a) Commenter et documenter(.README)
+- Indiquer fichier CSV à partir de son chemin et le charger dans la BDD 
+- Téléharger CSV du site de la TAM en temps réel dans la BDD (fonction mettre à jour la base de donnée)
+- Afficher les temps d'attente à un arrêt pour une ligne.
+- Afficher les prochains passages à un arrêt donné
+- Faire une log 
+- Commenter et documenter(.README)
 
 
 
