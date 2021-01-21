@@ -34,19 +34,19 @@ On importe
 - Remove table : si nouvelle table, supprime l'ancienne
 - Create shéma : Créer la structure de la table (les colonnes, lignes..)
 - Class files(NamedTuple): On creer un objet qui contient deux variables de type str
-csv_path correspond à chemin vers le ficher csv
-db_path correspond au nom de que l'on donne à la base de donnée que l'on veut creer
+- csv_path correspond à chemin vers le ficher csv
+- db_path correspond au nom de que l'on donne à la base de donnée que l'on veut creer
 
 - Download : Importe le dossier DATA TAM
 - Wainting time : temps d'attente a un arret avant le prochain passage pour un arret, une ligne et une destination donnée
 - nextTram : Définit les 3 prochains trains ou bus à un arret donné 
 
-parser : définition des différents éléments donnés en ligne de commandes :
-db_path = chemin de la base de donnée
-csv_path = chemin du fichier csv
+- parser : définition des différents éléments donnés en ligne de commandes :
+- db_path = chemin de la base de donnée
+- csv_path = chemin du fichier csv
 
 
-- def_main : Définit Argparse
+- def_main : 
 
 
 
@@ -57,7 +57,6 @@ et supprime la derniere base de donnée téléchargée.
 
 La fonction -t permet d’afficher le prochain tram dans votre terminal.  
 Entrez « -t » suivi du nom de votre arrêt et de sa direction, exemple : -u -t 2 SABINES JACOU le Terminal affiche (21:37)
--n
 
-La fonction -n affiche les 3 prochains tramway 
+La fonction -n affiche les 3 prochains tramways ou bus à un arret donné
 Entrez « -u, -t, -n » dans votre terminal 
