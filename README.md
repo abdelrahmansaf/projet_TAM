@@ -22,33 +22,42 @@ III) Explication du script :
 On importe 
 -Sqlite3 pour lire la bdd
 -Argparse pour faire une liste de commande
--os, système,
+-os  
+-Système pour sys.exit
 -Urllib request pour faire une requete de téléchargement pour la DB de la TAM
 -Typing named tuple 
 -logging pour la log
 
-- La fonction clear_rows(cursor) :
-cursor.execute sert à raw curser pour repartir à 0
+- La fonction clear_rows(cursor) n'est pas utilisé pour le moment
 - Insert CSV row : créer la table
-- Load_csv : supprimer l'entête
+- Load_csv : Ouvrir la db, la lire ligne par ligne
 - Remove table : si nouvelle table, supprime l'ancienne
-- Create shéma : Importe les colonnes 
-- Class files(NamedTuple): csv est le liens vers le fichier .CSV, l'autre le transforme en db et le renomme?
+- Create shéma : Créer la structure de la table (les colonnes, lignes..)
+- Class files(NamedTuple): On creer un objet qui contient deux variables de type str
+csv_path correspond à chemin vers le ficher csv
+db_path correspond au nom de que l'on donne à la base de donnée que l'on veut creer
+
 - Download : Importe le dossier DATA TAM
-- Wainting time : temps d'attente a un arret
+- Wainting time : temps d'attente a un arret avant le prochain passage pour un arret, une ligne et une destination donnée
+- nextTram : Définit les 3 prochains trains ou bus à un arret donné 
+
+parser : définition des différents éléments donnés en ligne de commandes :
+db_path = chemin de la base de donnée
+csv_path = chemin du fichier csv
+
+
 - def_main : Définit Argparse
 
 
 
 IV) Guide d'utilisation :
 
-Téléchargez la bdd > cd.\tam_proj> python.\nom du fichier
-
 La fonction -u permet de télécharger la base de donnée en .csv directement via site de la tam, 
 et supprime la derniere base de donnée téléchargée. 
 
 La fonction -t permet d’afficher le prochain tram dans votre terminal.  
 Entrez « -t » suivi du nom de votre arrêt et de sa direction, exemple : -u -t 2 SABINES JACOU le Terminal affiche (21:37)
+-n
 
 La fonction -n affiche les 3 prochains tramway 
 Entrez « -u, -t, -n » dans votre terminal 
