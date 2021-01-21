@@ -3,10 +3,11 @@ import argparse
 import sys
 import os
 import urllib.request
+import math
 from typing import NamedTuple
 
-def clear_rows(cursor):
-    cursor.execute("""DELETE FROM infoarret""")
+# def clear_rows(cursor):
+#     cursor.execute("""DELETE FROM infoarret""")
 
 
 def insert_csv_row(csv_row, cursor):
@@ -25,7 +26,7 @@ def load_csv(path, cursor):
             line = f.readline()
 
 def remove_table(cursor):
-    cursor.execute("""DROP TABLE infoarret""")
+    cursor.execute("""DROP TABLE IF EXISTS infoarret""" )
 
 def create_schema(cursor):
     cursor.execute("""CREATE TABLE IF NOT EXISTS "infoarret" (
@@ -59,13 +60,22 @@ def download_csv():
     urllib.request.urlretrieve(url,files_paths.csv_path)
     return files_paths
 
-def waiting_time(route_short_name,stop_name,trip_headsign,db_path,cursor):
-    cursor.execute(f"SELECT is_theorical FROM {db_path} WHERE route_short_name = '{route_short_name}' AND stop_name = '{stop_name}' AND trip_headsign = '{trip_headsign}' LIMIT 1")
+def waiting_time(route_short_name,stop_name,trip_headsign,table_path,cursor):
+    cursor.execute(f"SELECT is_theorical FROM {table_path} WHERE route_short_name = '{route_short_name}' AND stop_name = '{stop_name}' AND trip_headsign = '{trip_headsign}' LIMIT 1")
     return cursor.fetchone()
-    
+
+def nextTram(stop_name, table_name, cursor):
+    cursor.execute(f"SELECT * FROM {table_name} WHERE stop_name = '{stop_name}' ORDER BY delay_sec")
+    i=0
+    for next_trip in cursor.fetchall():
+        print(f"La ligne {next_trip[4]} à destination de {next_trip[5]} arrive dans {(math.ceil(next_trip[9]/60))} minutes")
+        i+=1
+        if i>=3:
+            return
+
 parser = argparse.ArgumentParser("Script to interact with data from the TAM API")
-parser.add_argument("-db_path", help="path to sqlite database")
-parser.add_argument("-csv_path", help="path to csv file to load into the db")
+parser.add_argument("-db", "--db_path", help="path to sqlite database")
+parser.add_argument("-csv", "--csv_path", help="path to csv file to load into the db")
 parser.add_argument("-u", "--update", action="store_true", help="update realtime TAM database")
 parser.add_argument("-t", "--time", nargs="*", help="time for the waiting")
 parser.add_argument("-n", "--next", help="Next tramways")
@@ -91,16 +101,19 @@ def main():
         return 1
 
     c = conn.cursor()
-
-    #cette fonction efface notre table
+    #this fonction removes our table
+    remove_table(c)
     
-    create_schema(c)
+    #this fonction creates a structure for our database 
+    create_schema(c) 
     
-    if args.update:
-        create_schema(c)
+    
+    if args.update and args.next:
         load_csv(csv_path,c)
-        print(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))
-        remove_table(c)
+        nextTram(args.next, "infoarret",c)
+    elif args.update and args.time:
+        load_csv(csv_path,c)
+        print("Le prochain tram arrive à :","".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))))     
     else:
         load_csv(args.csv_path, c)
 
