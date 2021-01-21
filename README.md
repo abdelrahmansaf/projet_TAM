@@ -16,6 +16,23 @@ a) Commenter et documenter(.README)
 
 
 Explication du script :
+j'importe Sqlite3 pour lire la bdd
+argparse pour faire une liste de commande
+os, système, urllib request pour faire la fonction
+et typing named tuple pour faire la fonction
+logging pour faire la log
+
+La fonction clear_rows(cursor)
+cursor.execute sert à raw curser pour repartir à 0
+
+Insert CSV row : créer la table
+Load_csv : sans l'entête
+Remove table : si nouvelle table supprime l'ancienne
+Create shéma : j'importer les colonnes 
+Class files(NamedTuple):
+Download : Importer dossier DATA TAM
+Wainting time : temps d'attente a un arret
+def_main :
 
 Guide d'utilisation :
 Téléchargez la bdd > cd.\tam_proj> python.\nom du fichier
