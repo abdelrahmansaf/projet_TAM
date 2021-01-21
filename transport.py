@@ -67,11 +67,14 @@ def waiting_time(route_short_name,stop_name,trip_headsign,table_path,cursor):
 def nextTram(stop_name, table_name, cursor):
     cursor.execute(f"SELECT * FROM {table_name} WHERE stop_name = '{stop_name}' ORDER BY delay_sec")
     i=0
+    trip_list =[]
     for next_trip in cursor.fetchall():
-        print(f"La ligne {next_trip[4]} à destination de {next_trip[5]} arrive dans {(math.ceil(next_trip[9]/60))} minutes")
+        trip_list.append(f"La ligne {next_trip[4]} à destination de {next_trip[5]} arrive dans {(math.ceil(next_trip[9]/60))} minutes")
         i+=1
         if i>=3:
-            return
+            break
+    return trip_list
+
 
 parser = argparse.ArgumentParser("Script to interact with data from the TAM API")
 parser.add_argument("-db", "--db_path", help="path to sqlite database")
@@ -79,6 +82,7 @@ parser.add_argument("-csv", "--csv_path", help="path to csv file to load into th
 parser.add_argument("-u", "--update", action="store_true", help="update realtime TAM database")
 parser.add_argument("-t", "--time", nargs="*", help="time for the waiting")
 parser.add_argument("-n", "--next", help="Next tramways")
+parser.add_argument("-f", "--file",action="store_true", help="Write on file")
 
 def main():
     args = parser.parse_args()
@@ -107,15 +111,28 @@ def main():
     #this fonction creates a structure for our database 
     create_schema(c) 
     
-    
-    if args.update and args.next:
-        load_csv(csv_path,c)
-        nextTram(args.next, "infoarret",c)
-    elif args.update and args.time:
-        load_csv(csv_path,c)
-        print("Le prochain tram arrive à :","".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))))     
+    if not args.file:
+        if args.update and args.next:
+            load_csv(csv_path,c)
+            for trip in nextTram(args.next, "infoarret",c):
+                print(trip)
+        elif args.update and args.time:
+            load_csv(csv_path,c)
+            print("Le prochain tram arrive à :","".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c))))     
+        else:
+            load_csv(args.csv_path, c)
     else:
-        load_csv(args.csv_path, c)
+        info_tam = open("info_tam.txt", "a",encoding='utf-8')
+        if args.update and args.next:
+            load_csv(csv_path,c)
+            for trip in nextTram(args.next, "infoarret",c):
+                info_tam.write(f"{trip}\n")
+        elif args.update and args.time:
+            load_csv(csv_path,c)
+            info_tam.write("Le prochain tram arrive à :" + "".join(list(waiting_time(args.time[0],args.time[1],args.time[2],"infoarret",c)))+"\n") 
+        else:
+            load_csv(args.csv_path, c)
+        info_tam.close()
 
     #write changes to database
     conn.commit()
