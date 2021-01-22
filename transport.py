@@ -121,7 +121,6 @@ def download_csv():
     url = 'https://data.montpellier3m.fr/sites/default/files/ressources/TAM_MMM_TpsReel.csv'
     files_paths = files(os.getcwd() + "/tam.csv", "tam.db")
     urllib.request.urlretrieve(url,files_paths.csv_path)
-    print("Database updated successfully!")
     return files_paths
 
 
@@ -178,6 +177,7 @@ def main():
         load.pack()
         Button(text='Update',command=bar).pack()
         mainloop()
+        print("Database updated successfully!")
         files_paths = download_csv()
         db_path = files_paths.db_path
         csv_path = files_paths.csv_path
