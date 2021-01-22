@@ -1,18 +1,19 @@
 # Exploiter-l-opendata-des-horaires-de-la-TAM
 
 I) Définir les différentes tâches : 
-- Commenter et documenter le script existant
 - Rajouter des fonctionnalitées 
-- Veiller à respecter la PEP (installer "Pylint")
+- Veiller à respecter la PEP
 - Intégrer une Log
+- Commenter et documenter le script existant
 
 II) Répartition des tâches :
-- Indiquer fichier CSV à partir de son chemin et le charger dans la BDD 
-- Téléharger CSV du site de la TAM en temps réel dans la BDD (fonction mettre à jour la base de donnée)
-- Afficher les temps d'attente à un arrêt pour une ligne.
-- Afficher les prochains passages à un arrêt donné
-- Faire une log 
-- Commenter et documenter(.README)
+- Indiquer fichier CSV à partir de son chemin et le charger dans la BDD (Stéphanie, Abdulrahman, Adrian)
+- Téléharger CSV du site de la TAM en temps réel dans la BDD avec la fonction mettre à jour la base de donnée (Stéphanie, Abdulrahman, Adrian)
+- Afficher les temps d'attente à un arrêt pour une ligne (Abdulrahman, Adrian)
+- Afficher les prochains passages à un arrêt donné (Stéphanie)
+- Faire une log (Sarah)
+- Commenter et documenter (Sarah)
+- Pep (Sarah)
 
 
 
@@ -50,19 +51,27 @@ On importe
 
 
 
-IV) Guide d'utilisation :
+Guide d'utilisation :
 
-Assurez vous d'avoir une connexion pour charger la bdd depuis le site de la TAM Dans votre terminal 
-indiquez le chemin pour télécharger la base de donnée PS C:\Users\utilisateur\Downloads\projet_TAM-main> python .\transport.py
+I- CSV et BDD
 
-Entrez les arguments :
+Si vous avez déja une base de donnée indiquez le chemin de votre csv et de votre fichier base de donnée suivi des arguments de la partie II.
 
-La fonction -u permet de télécharger la base de donnée en .csv directement via site de la tam 
+OU 
 
-La fonction -t permet d’afficher le prochain tram dans votre terminal.  
-Entrez « -t » suivi du nom de votre arrêt et de sa direction
-exemple : -u -t 2 SABINES JACOU le Terminal affiche (21:37)
+Assurez vous d'avoir une connexion pour charger la bdd depuis le site de la TAM dans votre terminal avec les commandes :
+> python .\transport.py -u suivi des arguments de votre choix.
+(La fonction -u permet de télécharger la base de donnée en .csv directement via site de la tam)
+  
 
-La fonction -n affiche les 3 prochains tramways ou bus à un arret donné
-Entrez « -u, -t, -n » dans votre terminal 
-exemple : u -t -n JACOU
+
+II- Les arguments 
+-t :
+  La fonction -t(time) permet d’afficher le prochain tram dans votre terminal.  
+  Entrez « -t » suivi du nom de votre arrêt et de sa direction
+  exemple : -u -t 2 SABINES JACOU le Terminal affiche (21:37)
+
+-n :
+  La fonction -n(next) affiche les 3 prochains tramways ou bus à un arret donné
+  Entrez « -u, -t, -n » dans votre terminal 
+  exemple : u -t -n JACOU
