@@ -8,8 +8,11 @@ Typing named tuple
 logging for the log """
 
 import sqlite3
-import argparse
+import tkinter
 import sys
+from tkinter import *
+from tkinter.ttk import *
+import argparse
 import logging
 import os
 import urllib.request
@@ -23,11 +26,23 @@ logging.basicConfig(filename="logtransport.log", level=logging.INFO,
  format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-# def loading_screen():
-#     for _ in tqdm(range(100),
-#      desc="Downloading files and creating database...",
-#      ascii=False, ncols=100):
-#         time.sleep(0.01)
+tk=Tk()
+load= Progressbar(tk,length=300)
+
+def bar() :
+    load['value']=00
+    tk.update_idletasks()
+    time.sleep(.5)
+    load['value']=40 
+    tk.update_idletasks()
+    time.sleep(1)
+    load['value']=100
+    tk.update_idletasks()
+    time.sleep(0)
+
+
+
+
 
 """ insert_csv_row create a table function """
 logging.info("Create table")
@@ -102,12 +117,11 @@ returns downloaded file path"""
 logging.info("Import DATA TAM file")
 
 
-def download_csv():
-    # loading_screen()
+def download_csv(): 
     url = 'https://data.montpellier3m.fr/sites/default/files/ressources/TAM_MMM_TpsReel.csv'
     files_paths = files(os.getcwd() + "/tam.csv", "tam.db")
     urllib.request.urlretrieve(url,files_paths.csv_path)
-    print("Database created successfully!")
+    print("Database updated successfully!")
     return files_paths
 
 
@@ -149,6 +163,7 @@ parser.add_argument("-u", "--update", action="store_true", help="update realtime
 parser.add_argument("-t", "--time", nargs="*", help="time for the waiting")
 parser.add_argument("-n", "--next", help="Next tramways")
 parser.add_argument("-f", "--file", action="store_true", help="Write on file")
+parser.add_argument("-d", "--download_time", action="store_true", help="showing the downloading time")
 
 
 """ main function defined the body program """
@@ -158,10 +173,20 @@ logging.info("fonction corps du programme")
 def main():
     args = parser.parse_args()
     
-    if args.update:
+    if args.update and args.download_time :
+        # bar()
+        load.pack()
+        Button(text='Update',command=bar).pack()
+        mainloop()
         files_paths = download_csv()
         db_path = files_paths.db_path
         csv_path = files_paths.csv_path
+
+    elif args.update:
+        files_paths = download_csv()
+        db_path = files_paths.db_path
+        csv_path = files_paths.csv_path   
+        
     elif not args.csv_path or not args.db_path:
         print("Error : missing command line arguments")
         return 1
